@@ -1,34 +1,81 @@
 <link rel="import" href="../polymer/polymer.html">
-
-<!--
-`oc-accounts-api`
-Element for consuming the Accounts API
-
-@demo demo/index.html
--->
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../oc-core-utils/oc-api-provider-behaviour.html">
 
 <dom-module id="oc-accounts-api">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-    <h2>Hello [[prop1]]!</h2>
+    <iron-ajax id="getAccountTypes"></iron-ajax>
+    <iron-ajax id="addUserAccount"></iron-ajax>
+    <iron-ajax id="getUserAccounts"></iron-ajax>
+    <iron-ajax id="getAccount"></iron-ajax>
+    <iron-ajax id="updateAccount"></iron-ajax>
+
+
   </template>
 
-  <script>
+  <script>(function(){
     Polymer({
-
       is: 'oc-accounts-api',
+      behaviors: [OC.Behaviours.ApiProvider],
 
-      properties: {
-        prop1: {
-          type: String,
-          value: 'oc-accounts-api',
-        },
+      /**
+       * Retrieve all account types
+       *
+       * @return {Promise}
+       */
+      getAccountTypes: function() {
+        this.$.getAccountTypes.url = this._url('accounts/types');
+        return this._generateRequest(this.$.getAccountTypes);
+      },
+
+
+      /**
+       * Create a new user account
+       *
+       * @return {Promise}
+       */
+      addUserAccount: function(newAccount) {
+        this.$.createAccount.url = this._url('accounts');
+        this.$.createAccount.method = "POST";
+        this.$.createAccount.contentType = "application/json";
+        this.$.createAccount.body = newAccount;
+        return this._generateRequest(this.$.createUserAccount);
+      },
+
+      /**
+       * Retrieve an user account
+       *
+       * @return {Promise}
+       */
+      getUserAccounts: function(accountId) {
+        this.$.getUserAccounts.url = this._url('users/' + accountId +'/accounts');
+        return this._generateRequest(this.$.getUserAccounts);
+      },
+
+      /**
+       * Retrieve an account
+       *
+       * @return {Promise}
+       */
+      getAccount: function(accountId) {
+        this.$.getAccount.url = this._url('accounts/'+ accountId);
+        return this._generateRequest(this.$.getAccount);
+      },
+
+      /**
+       * Update an account's details
+       *
+       * @return {Promise}
+       */
+      updateAccount: function(accountId) {
+        this.$.updateAccountDetails.url = this._url('accounts/' + accountId);
+        this.$.updateAccountDetails.method = "PUT";
+        this.$.updateAccountDetails.contentType = "application/json";
+        this.$.updateAccountDetails.body = accountDetails;
+        return this._generateRequest(this.$.updateAccount);
       },
 
     });
+  })();
   </script>
 </dom-module>
