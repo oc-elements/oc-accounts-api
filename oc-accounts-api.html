@@ -34,12 +34,13 @@
        *
        * @return {Promise}
        */
-      addUserAccount: function(newAccount) {
-        this.$.createAccount.url = this._url('accounts');
-        this.$.createAccount.method = "POST";
-        this.$.createAccount.contentType = "application/json";
-        this.$.createAccount.body = newAccount;
-        return this._generateRequest(this.$.createUserAccount);
+      addUserAccount: function(userId, accountData) {
+        // var _data = accountData;
+        this.$.addUserAccount.url = this._url('users/'+ userId + '/accounts');
+        this.$.addUserAccount.method = "POST";
+        this.$.addUserAccount.contentType = "application/json";
+        this.$.addUserAccount.body = accountData;
+        return this._generateRequest(this.$.addUserAccount);
       },
 
       /**
