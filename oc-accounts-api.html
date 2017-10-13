@@ -68,8 +68,8 @@
        *
        * @return {Promise}
        */
-      updateAccount: function(accountId) {
-        this.$.updateAccountDetails.url = this._url('accounts/' + accountId);
+      updateAccount: function(userId) {
+        this.$.updateAccountDetails.url = this._url('accounts/' + userId);
         this.$.updateAccountDetails.method = "PUT";
         this.$.updateAccountDetails.contentType = "application/json";
         this.$.updateAccountDetails.body = accountDetails;
