@@ -1,82 +1,89 @@
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../iron-ajax/iron-ajax.html">
-<link rel="import" href="../oc-core-utils/oc-api-provider-behaviour.html">
+<link rel="import" href="../oc-core-utils/oc-core-utils.html">
 
-<dom-module id="oc-accounts-api">
-  <template>
-    <iron-ajax id="getAccountTypes"></iron-ajax>
-    <iron-ajax id="addUserAccount"></iron-ajax>
-    <iron-ajax id="getUserAccounts"></iron-ajax>
-    <iron-ajax id="getAccount"></iron-ajax>
-    <iron-ajax id="updateAccount"></iron-ajax>
+<dom-module id="oc-accounts-api">>
+    <template>
+      <iron-ajax id="getAccountTypes"></iron-ajax>
+      <iron-ajax id="addUserAccount"></iron-ajax>
+      <iron-ajax id="getUserAccounts"></iron-ajax>
+      <iron-ajax id="getAccount"></iron-ajax>
+      <iron-ajax id="updateAccount"></iron-ajax>
+    </template>
+
+  <script>
+    /**
+     * `oc-accounts-api`
+     * Ordercloud API calls for accounts endpoint
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class OcAccountsApi extends Ordercloud.ApiMixin(Polymer.Element) {
+      static get is() { return 'oc-accounts-api'; }
+      static get properties() {};
+
+        /**
+         * Retrieve all account types
+         *
+         * @return {Promise}
+         */
+        getAccountTypes() {
+            this.$.getAccountTypes.url = this._url('accounts/types');
+            return this._generateRequest(this.$.getAccountTypes);
+        }
 
 
-  </template>
+        /**
+         * Create a new user account
+         *
+         * @return {Promise}
+         */
+        addUserAccount(userId, accountData) {
+            // var _data = accountData;
+            this.$.addUserAccount.url = this._url('users/' + userId + '/accounts');
+            this.$.addUserAccount.method = "POST";
+            this.$.addUserAccount.contentType = "application/json";
+            this.$.addUserAccount.body = accountData;
+            return this._generateRequest(this.$.addUserAccount);
+        }
 
-  <script>(function(){
-    Polymer({
-      is: 'oc-accounts-api',
-      behaviors: [OC.Behaviours.ApiProvider],
+        /**
+         * Retrieve an user account
+         *
+         * @return {Promise}
+         */
+        getUserAccounts(accountId) {
+            this.$.getUserAccounts.url = this._url('users/' + accountId +'/accounts');
+            return this._generateRequest(this.$.getUserAccounts);
+        }
 
-      /**
-       * Retrieve all account types
-       *
-       * @return {Promise}
-       */
-      getAccountTypes: function() {
-        this.$.getAccountTypes.url = this._url('accounts/types');
-        return this._generateRequest(this.$.getAccountTypes);
-      },
+        /**
+         * Retrieve an account
+         *
+         * @return {Promise}
+         */
+        getAccount(accountId) {
+            this.$.getAccount.url = this._url('accounts/'+ accountId);
+            return this._generateRequest(this.$.getAccount);
+        }
 
+        /**
+         * Update an account's details
+         *
+         * @return {Promise}
+         */
+        updateAccount(userId) {
+            this.$.updateAccountDetails.url = this._url('accounts/' + userId);
+            this.$.updateAccountDetails.method = "PUT";
+            this.$.updateAccountDetails.contentType = "application/json";
+            this.$.updateAccountDetails.body = accountDetails;
+            return this._generateRequest(this.$.updateAccount);
+        }
 
-      /**
-       * Create a new user account
-       *
-       * @return {Promise}
-       */
-      addUserAccount: function(userId, accountData) {
-        // var _data = accountData;
-        this.$.addUserAccount.url = this._url('users/'+ userId + '/accounts');
-        this.$.addUserAccount.method = "POST";
-        this.$.addUserAccount.contentType = "application/json";
-        this.$.addUserAccount.body = accountData;
-        return this._generateRequest(this.$.addUserAccount);
-      },
+    }
 
-      /**
-       * Retrieve an user account
-       *
-       * @return {Promise}
-       */
-      getUserAccounts: function(accountId) {
-        this.$.getUserAccounts.url = this._url('users/' + accountId +'/accounts');
-        return this._generateRequest(this.$.getUserAccounts);
-      },
-
-      /**
-       * Retrieve an account
-       *
-       * @return {Promise}
-       */
-      getAccount: function(accountId) {
-        this.$.getAccount.url = this._url('accounts/'+ accountId);
-        return this._generateRequest(this.$.getAccount);
-      },
-
-      /**
-       * Update an account's details
-       *
-       * @return {Promise}
-       */
-      updateAccount: function(userId) {
-        this.$.updateAccountDetails.url = this._url('accounts/' + userId);
-        this.$.updateAccountDetails.method = "PUT";
-        this.$.updateAccountDetails.contentType = "application/json";
-        this.$.updateAccountDetails.body = accountDetails;
-        return this._generateRequest(this.$.updateAccount);
-      },
-
-    });
-  })();
+    window.customElements.define(OcAccountsApi.is, OcAccountsApi);
   </script>
 </dom-module>

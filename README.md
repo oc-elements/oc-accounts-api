@@ -1,6 +1,6 @@
 # \<oc-accounts-api\>
 
-Element for consuming the Accounts API
+Ordercloud API calls for accounts endpoint
 
 ## Install the Polymer-CLI
 
