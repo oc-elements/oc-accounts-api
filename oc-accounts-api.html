@@ -30,7 +30,7 @@
          * @return {Promise}
          */
         getAccountTypes() {
-            this.$.getAccountTypes.url = this._url('accounts/types');
+            this.$.getAccountTypes.url = this._generateUrl('accounts/types');
             return this._generateRequest(this.$.getAccountTypes);
         }
 
@@ -42,7 +42,7 @@
          */
         addUserAccount(userId, accountData) {
             // var _data = accountData;
-            this.$.addUserAccount.url = this._url('users/' + userId + '/accounts');
+            this.$.addUserAccount.url = this._generateUrl('users/' + userId + '/accounts');
             this.$.addUserAccount.method = "POST";
             this.$.addUserAccount.contentType = "application/json";
             this.$.addUserAccount.body = accountData;
@@ -55,7 +55,7 @@
          * @return {Promise}
          */
         getUserAccounts(accountId) {
-            this.$.getUserAccounts.url = this._url('users/' + accountId +'/accounts');
+            this.$.getUserAccounts.url = this._generateUrl('users/' + accountId +'/accounts');
             return this._generateRequest(this.$.getUserAccounts);
         }
 
@@ -65,7 +65,7 @@
          * @return {Promise}
          */
         getAccount(accountId) {
-            this.$.getAccount.url = this._url('accounts/'+ accountId);
+            this.$.getAccount.url = this._generateUrl('accounts/'+ accountId);
             return this._generateRequest(this.$.getAccount);
         }
 
@@ -75,7 +75,7 @@
          * @return {Promise}
          */
         updateAccount(userId) {
-            this.$.updateAccountDetails.url = this._url('accounts/' + userId);
+            this.$.updateAccountDetails.url = this._generateUrl('accounts/' + userId);
             this.$.updateAccountDetails.method = "PUT";
             this.$.updateAccountDetails.contentType = "application/json";
             this.$.updateAccountDetails.body = accountDetails;
