@@ -26,11 +26,11 @@
 
         /**
          * Retrieve all account types
-         *
+         * @param type personal , business or markeptlace
          * @return {Promise}
          */
-        getAccountTypes() {
-            this.$.getAccountTypes.url = this._generateUrl('accounts/types');
+        getAccountTypes(type) {
+            this.$.getAccountTypes.url = this._generateUrl('accounts/types?filter=' + type);
             return this._generateRequest(this.$.getAccountTypes);
         }
 
