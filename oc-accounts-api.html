@@ -82,6 +82,21 @@
             return this._generateRequest(this.$.updateAccount);
         }
 
+        /**
+         * Checkout ID from peach for card registration
+         *
+         * returns response.body.id checkout id from peach
+         *
+         * @return {Promise}
+         */
+        peachRegistration() {
+            this.$.peachRegistration.url = this._generateUrl('accounts/peach-registration');
+            this.$.peachRegistration.method = "GET";
+            this.$.peachRegistration.contentType = "application/json";
+            return this._generateRequest(this.$.peachRegistration);
+        }
+
+
     }
 
     window.customElements.define(OcAccountsApi.is, OcAccountsApi);
