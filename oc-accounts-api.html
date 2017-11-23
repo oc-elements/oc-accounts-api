@@ -4,102 +4,118 @@
 
 <dom-module id="oc-accounts-api">>
     <template>
-      <iron-ajax id="getAccountTypes"></iron-ajax>
-      <iron-ajax id="addUserAccount"></iron-ajax>
-      <iron-ajax id="getUserAccounts"></iron-ajax>
-      <iron-ajax id="getAccount"></iron-ajax>
-      <iron-ajax id="updateAccount"></iron-ajax>
-      <iron-ajax id="peachRegistration"></iron-ajax>
+        <iron-ajax id="getAccountTypes"></iron-ajax>
+        <iron-ajax id="addUserAccount"></iron-ajax>
+        <iron-ajax id="getUserAccounts"></iron-ajax>
+        <iron-ajax id="getAccount"></iron-ajax>
+        <iron-ajax id="updateAccount"></iron-ajax>
+        <iron-ajax id="peachRegistration"></iron-ajax>
     </template>
 
-  <script>
-    /**
-     * `oc-accounts-api`
-     * Ordercloud API calls for accounts endpoint
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class OcAccountsApi extends Ordercloud.ApiMixin(Polymer.Element) {
-      static get is() { return 'oc-accounts-api'; }
-      static get properties() {};
-
+    <script>
         /**
-         * Retrieve all account types
-         * @param type personal , business or markeptlace
-         * @return {Promise}
+         * `oc-accounts-api`
+         * Ordercloud API calls for accounts endpoint
+         *
+         * @customElement
+         * @polymer
+         * @demo demo/index.html
          */
-        getAccountTypes(type) {
-            this.$.getAccountTypes.url = this._generateUrl('accounts/types?filter=' + type);
-            return this._generateRequest(this.$.getAccountTypes);
+        class OcAccountsApi extends Ordercloud.ApiMixin(Polymer.Element) {
+            static get is() { return 'oc-accounts-api'; }
+            static get properties() {};
+
+            /**
+             * Retrieve all account types
+             * @param type personal , business or markeptlace
+             * @return {Promise}
+             */
+            getAccountTypes(type) {
+                this.$.getAccountTypes.url = this._generateUrl('accounts/types?filter=' + type);
+                return this._generateRequest(this.$.getAccountTypes);
+            }
+
+
+            /**
+             * Create a new user account
+             *
+             * @return {Promise}
+             */
+            addUserAccount(userId, accountData) {
+                // var _data = accountData;
+                this.$.addUserAccount.url = this._generateUrl('users/' + userId + '/accounts');
+                this.$.addUserAccount.method = "POST";
+                this.$.addUserAccount.contentType = "application/json";
+                this.$.addUserAccount.body = accountData;
+                return this._generateRequest(this.$.addUserAccount);
+            }
+
+            /**
+             * Retrieve an user account
+             *
+             * @return {Promise}
+             */
+            getUserAccounts(accountId) {
+                this.$.getUserAccounts.url = this._generateUrl('users/' + accountId +'/accounts');
+                return this._generateRequest(this.$.getUserAccounts);
+            }
+
+            /**
+             * Retrieve an account
+             *
+             * @return {Promise}
+             */
+            getAccount(accountId) {
+                this.$.getAccount.url = this._generateUrl('accounts/'+ accountId);
+                return this._generateRequest(this.$.getAccount);
+            }
+
+
+            /**
+             * Retrieve an account
+             *
+             * @param accountId to fetch transactions for
+             * @param fromDate transaction filter
+             * @param toDate transaction filter
+             * @param transactionType transactionType allowed filter [control, purchase, fee]
+             * @return {Promise}
+             */
+            getAccountTransactions(accountId, fromDate, toDate,transactionType) {
+                this.$.getAccount.url = this._generateUrl('accounts/'+ accountId + '/transactions?transaction_type=' + transactionType);
+                return this._generateRequest(this.$.getAccount);
+            }
+
+
+            /**
+             * Update an account's details
+             *
+             * @return {Promise}
+             */
+            updateAccount(userId) {
+                this.$.updateAccountDetails.url = this._generateUrl('accounts/' + userId);
+                this.$.updateAccountDetails.method = "PUT";
+                this.$.updateAccountDetails.contentType = "application/json";
+                this.$.updateAccountDetails.body = accountDetails;
+                return this._generateRequest(this.$.updateAccount);
+            }
+
+            /**
+             * Checkout ID from peach for card registration
+             *
+             * returns response.body.id checkout id from peach
+             *
+             * @return {Promise}
+             */
+            peachRegistration() {
+                this.$.peachRegistration.url = this._generateUrl('accounts/peach-registration');
+                this.$.peachRegistration.method = "GET";
+                this.$.peachRegistration.contentType = "application/json";
+                return this._generateRequest(this.$.peachRegistration);
+            }
+
+
         }
 
-
-        /**
-         * Create a new user account
-         *
-         * @return {Promise}
-         */
-        addUserAccount(userId, accountData) {
-            // var _data = accountData;
-            this.$.addUserAccount.url = this._generateUrl('users/' + userId + '/accounts');
-            this.$.addUserAccount.method = "POST";
-            this.$.addUserAccount.contentType = "application/json";
-            this.$.addUserAccount.body = accountData;
-            return this._generateRequest(this.$.addUserAccount);
-        }
-
-        /**
-         * Retrieve an user account
-         *
-         * @return {Promise}
-         */
-        getUserAccounts(accountId) {
-            this.$.getUserAccounts.url = this._generateUrl('users/' + accountId +'/accounts');
-            return this._generateRequest(this.$.getUserAccounts);
-        }
-
-        /**
-         * Retrieve an account
-         *
-         * @return {Promise}
-         */
-        getAccount(accountId) {
-            this.$.getAccount.url = this._generateUrl('accounts/'+ accountId);
-            return this._generateRequest(this.$.getAccount);
-        }
-
-        /**
-         * Update an account's details
-         *
-         * @return {Promise}
-         */
-        updateAccount(userId) {
-            this.$.updateAccountDetails.url = this._generateUrl('accounts/' + userId);
-            this.$.updateAccountDetails.method = "PUT";
-            this.$.updateAccountDetails.contentType = "application/json";
-            this.$.updateAccountDetails.body = accountDetails;
-            return this._generateRequest(this.$.updateAccount);
-        }
-
-        /**
-         * Checkout ID from peach for card registration
-         *
-         * returns response.body.id checkout id from peach
-         *
-         * @return {Promise}
-         */
-        peachRegistration() {
-            this.$.peachRegistration.url = this._generateUrl('accounts/peach-registration');
-            this.$.peachRegistration.method = "GET";
-            this.$.peachRegistration.contentType = "application/json";
-            return this._generateRequest(this.$.peachRegistration);
-        }
-
-
-    }
-
-    window.customElements.define(OcAccountsApi.is, OcAccountsApi);
-  </script>
+        window.customElements.define(OcAccountsApi.is, OcAccountsApi);
+    </script>
 </dom-module>
