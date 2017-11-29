@@ -10,6 +10,7 @@
         <iron-ajax id="getAccount"></iron-ajax>
         <iron-ajax id="updateAccount"></iron-ajax>
         <iron-ajax id="peachRegistration"></iron-ajax>
+        <iron-ajax id="removeAccount"></iron-ajax>
     </template>
 
     <script>
@@ -99,6 +100,19 @@
                 return this._generateRequest(this.$.updateAccount);
             }
 
+
+            /**
+             * Remove an account
+             *
+             * @param accountId to remove
+             * @return {Promise}
+             */
+            removeAccount(accountId) {
+                this.$.removeAccount.url = this._generateUrl('accounts/' + accountId);
+                this.$.removeAccount.method = "DELETE";
+                return this._generateRequest(this.$.removeAccount);
+            }
+
             /**
              * Checkout ID from peach for card registration
              *
@@ -112,7 +126,6 @@
                 this.$.peachRegistration.contentType = "application/json";
                 return this._generateRequest(this.$.peachRegistration);
             }
-
 
         }
 
