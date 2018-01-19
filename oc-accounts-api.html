@@ -109,7 +109,7 @@
              * @return {Promise}
              */
             getAccountTransactions(accountId, fromDate, toDate,transactionType) {
-                this.$.getAccount.url = this._generateUrl('accounts/'+ accountId + '/transactions?transaction_type=' + transactionType);
+                this.$.getAccount.url = this._generateUrl('accounts/'+ accountId + '/transactions');
                 return this._generateRequest(this.$.getAccount);
             }
 
