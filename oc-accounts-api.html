@@ -5,10 +5,13 @@
 <dom-module id="oc-accounts-api">>
     <template>
         <iron-ajax id="getAccountTypes"></iron-ajax>
+        <iron-ajax id="addOrganisationAccount"></iron-ajax>
+        <iron-ajax id="getOrganisationAccounts"></iron-ajax>
         <iron-ajax id="addUserAccount"></iron-ajax>
         <iron-ajax id="getUserAccounts"></iron-ajax>
         <iron-ajax id="getAccount"></iron-ajax>
         <iron-ajax id="updateAccount"></iron-ajax>
+        <iron-ajax id="updateOrganisationAccount"></iron-ajax>
         <iron-ajax id="peachRegistration"></iron-ajax>
         <iron-ajax id="removeAccount"></iron-ajax>
     </template>
@@ -62,6 +65,30 @@
             }
 
             /**
+             * Create a new organisation account
+             *
+             * @return {Promise}
+             */
+            addOrganisationAccount(organisationId, accountData) {
+                // var _data = accountData;
+                this.$.addOrganisationAccount.url = this._generateUrl('organisations/' + organisationId + '/accounts');
+                this.$.addOrganisationAccount.method = "POST";
+                this.$.addOrganisationAccount.contentType = "application/json";
+                this.$.addOrganisationAccount.body = accountData;
+                return this._generateRequest(this.$.addOrganisationAccount);
+            }
+
+            /**
+             * Retrieve an organisation account
+             *
+             * @return {Promise}
+             */
+            getOrganisationAccounts(organisationId) {
+                this.$.getOrganisationAccounts.url = this._generateUrl('organisations/' + organisationId + '/accounts');
+                return this._generateRequest(this.$.getOrganisationAccounts);
+            }
+
+            /**
              * Retrieve an account
              *
              * @return {Promise}
@@ -94,6 +121,19 @@
              */
             updateAccount(userId) {
                 this.$.updateAccountDetails.url = this._generateUrl('accounts/' + userId);
+                this.$.updateAccountDetails.method = "PUT";
+                this.$.updateAccountDetails.contentType = "application/json";
+                this.$.updateAccountDetails.body = accountDetails;
+                return this._generateRequest(this.$.updateAccount);
+            }
+
+            /**
+             * Update an organisation's details
+             *
+             * @return {Promise}
+             */
+            updateOrganisationAccount(organisationId) {
+                this.$.updateAccountDetails.url = this._generateUrl('accounts/' + organisationId);
                 this.$.updateAccountDetails.method = "PUT";
                 this.$.updateAccountDetails.contentType = "application/json";
                 this.$.updateAccountDetails.body = accountDetails;
