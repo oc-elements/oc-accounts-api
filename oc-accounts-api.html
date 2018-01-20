@@ -99,6 +99,8 @@
             }
 
 
+
+
             /**
              * Retrieve an account
              *
@@ -109,9 +111,15 @@
              * @return {Promise}
              */
             getAccountTransactions(accountId, fromDate, toDate,transactionType) {
-                this.$.getAccount.url = this._generateUrl('accounts/'+ accountId + '/transactions');
+
+                let filter = '';
+                if((transactionType)&&(transactionType.toLowerCase() === "all")){
+                    filter = '?transaction_type=' + transactionType;
+                }
+                this.$.getAccount.url = this._generateUrl('accounts/'+ accountId + '/transactions' + filter);
                 return this._generateRequest(this.$.getAccount);
             }
+
 
 
             /**
