@@ -84,10 +84,15 @@
              *
              * @return {Promise}
              */
-			getOrganisationAccounts(organisationId, kind) {
-				this.$.getOrganisationAccounts.url = this._generateUrl('organisations/' + organisationId + '/accounts?kind=' + kind);
-				return this._generateRequest(this.$.getOrganisationAccounts);
-			}
+            getOrganisationAccounts(organisationId, kind) {
+
+                let queryParams = '';
+                if(kind){
+                    queryParams = '?kind=' + kind;
+                }
+                this.$.getOrganisationAccounts.url = this._generateUrl('organisations/' + organisationId + '/accounts' + queryParams);
+                return this._generateRequest(this.$.getOrganisationAccounts);
+            }
 
             /**
              * Retrieve an account
