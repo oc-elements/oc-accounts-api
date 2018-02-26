@@ -8,6 +8,7 @@
         <iron-ajax id="addOrganisationAccount"></iron-ajax>
         <iron-ajax id="getOrganisationAccounts"></iron-ajax>
         <iron-ajax id="getOrganisationTransactions"></iron-ajax>
+        <iron-ajax id="getOrganisationTransaction"></iron-ajax>
         <iron-ajax id="addUserAccount"></iron-ajax>
         <iron-ajax id="getUserAccounts"></iron-ajax>
         <iron-ajax id="getAccount"></iron-ajax>
@@ -126,16 +127,27 @@
                 return this._generateRequest(this.$.getAccount);
             }
 
-			/**
-			 * Retrieve all transaction for organisation
-			 *
-			 * @param organisationId to fetch transactions for
-			 * @return {Promise}
-			 */
-			getOrganisationTransactions(organisationId) {
-				this.$.getOrganisationTransactions.url = this._generateUrl(`organisations/${organisationId}/transactions`);
-				return this._generateRequest(this.$.getOrganisationTransactions);
-			}
+            /**
+             * Retrieve all transaction for organisation
+             *
+             * @param organisationId to fetch transactions for
+             * @return {Promise}
+             */
+            getOrganisationTransactions(organisationId) {
+                this.$.getOrganisationTransactions.url = this._generateUrl(`organisations/${organisationId}/transactions`);
+                return this._generateRequest(this.$.getOrganisationTransactions);
+            }
+
+            /**
+             * Retrieve all transaction for organisation
+             *
+             * @param organisationId to fetch transactions for
+             * @return {Promise}
+             */
+            getOrganisationTransaction(organisationId, referenceId) {
+                this.$.getOrganisationTransaction.url = this._generateUrl(`organisations/${organisationId}/transactions/${referenceId}`);
+                return this._generateRequest(this.$.getOrganisationTransaction);
+            }
 
             /**
              * Update an account's details
