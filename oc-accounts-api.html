@@ -9,6 +9,7 @@
         <iron-ajax id="getOrganisationAccounts"></iron-ajax>
         <iron-ajax id="getOrganisationTransactions"></iron-ajax>
         <iron-ajax id="getOrganisationTransaction"></iron-ajax>
+        <iron-ajax id="downloadStatement"></iron-ajax>
         <iron-ajax id="addUserAccount"></iron-ajax>
         <iron-ajax id="getUserAccounts"></iron-ajax>
         <iron-ajax id="getAccount"></iron-ajax>
@@ -148,6 +149,19 @@
                 this.$.getOrganisationTransaction.url = this._generateUrl(`organisations/${organisationId}/transactions/${referenceId}`);
                 return this._generateRequest(this.$.getOrganisationTransaction);
             }
+
+			/**
+			 * Download defined statement for organisation
+			 *
+			 * @param organisationId to fetch transactions for
+			 * @return {Promise}
+			 */
+			downloadStatement(organisationId, fromDate, toDate) {
+				this.$.downloadStatement.url = this._generateUrl(`organisations/${organisationId}/transactions/statements/download?format=pdf`);
+				this.$.downloadStatement.responseType = "blob";
+				this.$.downloadStatement.handleAs = "blob";
+				return this._generateRequest(this.$.downloadStatement);
+			}
 
             /**
              * Update an account's details
