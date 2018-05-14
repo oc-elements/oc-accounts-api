@@ -140,6 +140,7 @@
                 const optionalParams = qPage + qPageSize;
                 this.$.getOrganisationAccountTransactions.url = this._generateUrl(`organisations/${organisationId}/transactions?account_id=${accountId}${optionalParams}`);
                 return this._generateRequest(this.$.getOrganisationAccountTransactions);
+            }
 
             /**
              * Retrieve all transaction for organisation
