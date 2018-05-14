@@ -128,16 +128,18 @@
                 return this._generateRequest(this.$.getAccount);
             }
 
+
             /**
-             * Retrieve all transaction for organisation
-             *
-             * @param organisationId to fetch transactions for
+             * Retrieve all organisation transactions by account
+             * /organisations/orgId/transactions?account_id=accountId
              * @return {Promise}
              */
-            getOrganisationTransactions(organisationId) {
-                this.$.getOrganisationTransactions.url = this._generateUrl(`organisations/${organisationId}/transactions`);
-                return this._generateRequest(this.$.getOrganisationTransactions);
-            }
+            getOrganisationAccountTransactions(organisationId, accountId, page, pageSize) {
+                const qPage = (page) ? `&page=${page}` : '';
+                const qPageSize = (pageSize) ? `&pagesize=${pageSize}` : '';
+                const optionalParams = qPage + qPageSize;
+                this.$.getOrganisationAccountTransactions.url = this._generateUrl(`organisations/${organisationId}/transactions?account_id=${accountId}${optionalParams}`);
+                return this._generateRequest(this.$.getOrganisationAccountTransactions);
 
             /**
              * Retrieve all transaction for organisation
