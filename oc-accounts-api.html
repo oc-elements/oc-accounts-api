@@ -86,13 +86,17 @@
              *
              * @return {Promise}
              */
-            getOrganisationAccounts(organisationId, kind) {
+            getOrganisationAccounts(organisationId, kind, txType) {
+                var queryParamsClause = [
+                    kind ? 'kind=' + kind : null,
+                    txType ? 'tx_type=' + txType : null
+                ].filter(function (queryParam) {
+                    return queryParam !== null;
+                }).join('&');
 
-                let queryParams = '';
-                if(kind){
-                    queryParams = '?kind=' + kind;
-                }
-                this.$.getOrganisationAccounts.url = this._generateUrl('organisations/' + organisationId + '/accounts' + queryParams);
+                queryParamsClause = queryParamsClause.length > 0 ? '?' + queryParamsClause : '';
+
+                this.$.getOrganisationAccounts.url = this._generateUrl('organisations/' + organisationId + '/accounts' + queryParamsClause);
                 return this._generateRequest(this.$.getOrganisationAccounts);
             }
 
