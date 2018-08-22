@@ -163,12 +163,12 @@
 			 * @param organisationId to fetch transactions for
 			 * @return {Promise}
 			 */
-			downloadStatement(organisationId, fromDate, toDate) {
-				this.$.downloadStatement.url = this._generateUrl(`organisations/${organisationId}/transactions/statements/download?format=pdf&from_date=${fromDate}&to_date=${toDate}`);
-				this.$.downloadStatement.responseType = "blob";
-				this.$.downloadStatement.handleAs = "blob";
-				return this._generateRequest(this.$.downloadStatement);
-			}
+            downloadStatement(organisationId, fromDate, toDate, documentFormat) {
+                this.$.downloadStatement.url = this._generateUrl(`organisations/${organisationId}/transactions/statements/download?format=${documentFormat}&from_date=${fromDate}&to_date=${toDate}`);
+                this.$.downloadStatement.responseType = "blob";
+                this.$.downloadStatement.handleAs = "blob";
+                return this._generateRequest(this.$.downloadStatement);
+            }
 
             /**
              * Update an account's details
