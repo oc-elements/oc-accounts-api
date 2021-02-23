@@ -146,14 +146,9 @@
                 return this._generateRequest(this.$.getOrganisationAccountTransactions);
             }
 
-            /**
-             * Retrieve all transaction for organisation
-             *
-             * @param organisationId to fetch transactions for
-             * @return {Promise}
-             */
-            getOrganisationTransaction(organisationId, referenceId) {
-                this.$.getOrganisationTransaction.url = this._generateUrl(`organisations/${organisationId}/transactions/${referenceId}`);
+			/* v2 */
+			getOrganisationTransaction(organisationId, referenceId) {
+                this.$.getOrganisationTransaction.url = this._generateUrl(`v2/transactions?org_id=${organisationId}&txn_id=${referenceId}`);
                 return this._generateRequest(this.$.getOrganisationTransaction);
             }
 
